@@ -1,0 +1,6 @@
+@WebAppTestAzureBlobDistributedCache_HostAddress = http://localhost:5170
+
+GET {{WebAppTestAzureBlobDistributedCache_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

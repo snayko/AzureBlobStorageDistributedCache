@@ -1,0 +1,6 @@
+﻿services:
+  webapptestazureblobdistributedcache:
+    image: webapptestazureblobdistributedcache
+    build:
+      context: .
+      dockerfile: WebAppTestAzureBlobDistributedCache/Dockerfile
