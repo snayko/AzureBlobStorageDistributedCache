@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using WebAppTestAzureBlobDistributedCache.Extensions;
 
 namespace WebAppTestAzureBlobDistributedCache.Controllers;
 
@@ -9,11 +10,6 @@ namespace WebAppTestAzureBlobDistributedCache.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IDistributedCache _cache;
     
@@ -35,16 +31,14 @@ public class WeatherForecastController : ControllerBase
                     Encoding.UTF8.GetString(cachedRes));
             }
         }
+        
+        Random random = new Random();
+        
+        //From 40 to 700Kb response
+        int randomResponseSizeToGenerate = random.Next(40, 701);
 
-
-        var res = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-
+        var res = FakeDataGenerator.GenerateRandomWeatherForecastJson(randomResponseSizeToGenerate);
+        
         if (!string.IsNullOrWhiteSpace(userId))
         {
             var options = new DistributedCacheEntryOptions();

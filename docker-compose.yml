@@ -4,3 +4,28 @@
     build:
       context: .
       dockerfile: WebAppTestAzureBlobDistributedCache/Dockerfile
+    environment:
+        # for Azure Blob use CACHE_MODE=LocalAzureBlob or CACHE_MODE=AzureBlob for real azure blob
+        # for Redis use CACHE_MODE=LocalRedis or CACHE_MODE=Redis for real azure redis
+        - CACHE_MODE=AzureBlob
+        
+    ports:
+        - "5170:8080"
+    #platform: linux/amd64
+    
+  #redis:
+  #    image: redis
+  #    ports:
+  #      - "6379:6379"
+  
+  #blobstorage:
+  #      image: mcr.microsoft.com/azure-storage/azurite
+  #      ports:
+  #        - "10000:10000"
+  
+  k6:
+    image: loadimpact/k6
+    command: run /scripts/basic-tests-k6-script.js
+    volumes:
+        - ./k6:/scripts
+    #platform: linux/amd64
