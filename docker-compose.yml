@@ -11,7 +11,7 @@
         
     ports:
         - "5170:8080"
-    #platform: linux/amd64
+    platform: linux/arm64
     
   #redis:
   #    image: redis
@@ -24,8 +24,8 @@
   #        - "10000:10000"
   
   k6:
-    image: loadimpact/k6
+    image: grafana/k6
     command: run /scripts/basic-tests-k6-script.js
     volumes:
         - ./k6:/scripts
-    #platform: linux/amd64
+    platform: linux/arm64

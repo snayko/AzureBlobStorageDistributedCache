@@ -15,7 +15,7 @@ export default function () {
   // Generate a unique userId for each VU
   let userId = `user${__VU}`;
 
-    let res = http.get('http://webapptestazureblobdistributedcache:5170/WeatherForecast?userId=${userId}');
+  let res = http.get(`http://webapptestazureblobdistributedcache:8080/WeatherForecast?userId=${userId}`);
   if (res.status !== 200) {
     console.error(`Failed with status ${res.status}`);
   }
